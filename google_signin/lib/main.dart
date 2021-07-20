@@ -1,5 +1,6 @@
 import 'dart:async';
 
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -34,7 +35,7 @@ class AppState extends State<App> {
     );
   }
 
-  Future<FirebaseUser> _signin() async {
+  Future<User> _signin() async {
     setState(() {
       userPage = Home(onSignin: null, onLogout: _logout, showLoading: true);
     });
@@ -43,16 +44,16 @@ class AppState extends State<App> {
       googleSignIn = GoogleSignIn();
       GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
       final GoogleSignInAuthentication gauth = await googleSignInAccount.authentication;
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: gauth.accessToken,
         idToken: gauth.idToken,
       );
-      final AuthResult authRes = await _auth.signInWithCredential(credential);
-      final FirebaseUser user = authRes.user;
+      final userCredential = await _auth.signInWithCredential(credential);
+      final User user = _auth.currentUser; //.user;
 
       setState(() {
         _username = user.displayName;
-        userPage = User(
+        userPage = UserWidget(
           onLogout: _logout,
           user: user,
         );

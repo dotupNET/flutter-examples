@@ -3,13 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-class User extends StatelessWidget {
-  User({Key key, @required this.onLogout, @required this.user})
+class UserWidget extends StatelessWidget {
+  UserWidget({Key key, @required this.onLogout, @required this.user})
       : super(key: key);
 
   VoidCallback onLogout;
   String username;
-  FirebaseUser user;
+  User user;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class User extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.network(user.photoUrl),
+              Image.network(user.photoURL),
               Text(
                 user.displayName,
                 textScaleFactor: 1.5,
